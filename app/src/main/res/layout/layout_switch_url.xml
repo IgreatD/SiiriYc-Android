@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    app:flexDirection="column">
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:id="@+id/etUrl"
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:background="@drawable/input_border"
-        android:completionThreshold="1"
-        android:dropDownHeight="200dp"
-        android:hint="@string/hint_switch_url"
         android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/qmui_config_color_50_pure_black"
-        android:textColorHint="@color/qmui_config_color_25_pure_black"
-        android:textSize="14sp" />
+        app:alignItems="center">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="@string/hint_switch_url"
+            android:singleLine="true"
+            android:textColor="@color/qmui_config_color_50_pure_black"
+            android:textColorHint="@color/qmui_config_color_25_pure_black"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_show"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_flexShrink="0"
+            app:srcCompat="@drawable/ic_arrow_down_24" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/input_border"
+        android:visibility="gone"
+        app:layout_maxHeight="200dp" />
 
 </com.google.android.flexbox.FlexboxLayout>

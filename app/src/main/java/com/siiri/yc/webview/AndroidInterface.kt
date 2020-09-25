@@ -24,6 +24,14 @@ class AndroidInterface(
 ) {
 
     /**
+     * 切换Ip地址
+     */
+    @JavascriptInterface
+    fun switchIp() {
+        activity.switchIp()
+    }
+
+    /**
      * 扫描二维码
      */
     @JavascriptInterface

@@ -51,6 +51,7 @@
             android:theme="@style/ScreenTheme" />
         <activity
             android:name=".ui.activity.NetworkErrorActivity"
+            android:launchMode="singleTop"
             android:theme="@style/ScreenTheme" />
 
         <receiver

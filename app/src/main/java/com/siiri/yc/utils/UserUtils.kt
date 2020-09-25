@@ -29,6 +29,14 @@ object UserUtils {
         return historyUrls.split(",").toMutableList()
     }
 
+    fun removeInputHistory(url: String) {
+        val histories = getInputHistories()
+        if (histories.isNotEmpty()) {
+            histories.remove(url)
+            historyUrls = histories.joinToString(",")
+        }
+    }
+
     fun addInputHistory(url: String) {
         val histories = getInputHistories()
         if (!histories.contains(url)) {
@@ -36,10 +44,10 @@ object UserUtils {
                 historyUrls.isEmpty() -> {
                     historyUrls = url
                 }
-                histories.size > 3 -> {
+                /*histories.size > 3 -> {
                     histories[2] = url
                     historyUrls = histories.joinToString(",")
-                }
+                }*/
                 else -> historyUrls += ",${url}"
             }
         }

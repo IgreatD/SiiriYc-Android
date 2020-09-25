@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.NetworkUtils
 import com.qmuiteam.qmui.kotlin.onClick
 import com.siiri.yc.R
 import com.siiri.yc.app.IntentConst
+import com.siiri.yc.utils.SwitchIpUtil
 import kotlinx.android.synthetic.main.agentweb_error_page.*
 
 /**
@@ -17,6 +18,9 @@ class NetworkErrorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.agentweb_error_page)
+        bt_switch.onClick {
+            SwitchIpUtil.switchIp(this)
+        }
         bt_reload.onClick {
             NetworkUtils.isAvailableAsync {
                 if (it) {

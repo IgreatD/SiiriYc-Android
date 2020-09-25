@@ -12,14 +12,15 @@
         android:id="@+id/tvUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/qmui_config_color_gray_1"
         android:textSize="14sp" />
 
-    <!--<androidx.appcompat.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_clear"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="10dp"
         app:layout_flexShrink="0"
-        app:srcCompat="@drawable/ic_baseline_close_24" />-->
+        app:srcCompat="@drawable/ic_baseline_close_24" />
 
 </com.google.android.flexbox.FlexboxLayout>
