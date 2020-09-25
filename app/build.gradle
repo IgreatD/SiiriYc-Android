@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def debugConfig = rootProject.ext.debug
+
+def releaseConfig = rootProject.ext.release
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+static def buildTime() {
+    def date = new Date()
+    def formatDate = date.format("yyyyMMddHHmmss")
+    return formatDate
+}
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+//    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.yc.wuhanyc"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: 'com.yc.wuhanyc',
+                JPUSH_APPKEY : "cb70ad6a07bdf0de904dd1db",//值来自开发者平台取得的AppKey
+                JPUSH_CHANNEL: "default_developer",
+        ]
+
+        flavorDimensions "default"
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    }
+
+    productFlavors {
+        "172.16.40.23" {
+            buildConfigField "String", "WEBVIEW_URL", debugConfig['webViewUrl']
+        }
+
+        "117.158.214.190" {
+            buildConfigField "String", "WEBVIEW_URL", releaseConfig['webViewUrl']
+        }
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (!variant.buildType.isDebuggable()) {
+                def name = "运维助手"
+                def version = "版本__${variant.versionCode}"
+                def flavor = "渠道__${variant.flavorName}"
+                def time = "打包时间__${buildTime()}"
+                def typeName = buildType.name
+                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apk/" + typeName)
+                outputFileName = "${name}-${version}-${flavor}-${time}_${typeName}.apk"
+            }
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        disable 'MissingTranslation'
+        disable 'ExtraTranslation'
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        jumboMode = true
+        preDexLibraries = false
+        additionalParameters = [
+                '--multi-dex',
+                '--set-max-idx-number=48000'
+        ]
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(":push")
+    implementation project(':lib_update')
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
+    implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'com.just.agentweb:agentweb-androidx:4.1.4' // (必选)
+    implementation 'com.just.agentweb:filechooser-androidx:4.1.4'// (可选)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    implementation 'com.king.zxing:zxing-lite:1.1.7-androidx'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.6"
+}

@@ -1,0 +1,4 @@
+include ':lib_update'
+include ':push'
+include ':app'
+rootProject.name = "SiiriYc"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/etUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/input_border"
+        android:completionThreshold="1"
+        android:dropDownHeight="200dp"
+        android:hint="@string/hint_switch_url"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/qmui_config_color_50_pure_black"
+        android:textColorHint="@color/qmui_config_color_25_pure_black"
+        android:textSize="14sp" />
+
+</com.google.android.flexbox.FlexboxLayout>

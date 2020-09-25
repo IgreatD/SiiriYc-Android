@@ -1,0 +1,20 @@
+ext {
+
+    debug = [
+            webViewUrl: "\"172.16.40.23\""
+    ]
+
+    release = [
+            webViewUrl: "\"117.158.214.190\""
+    ]
+
+    android = [
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            minSdkVersion    : 21,
+            targetSdkVersion : 27,
+            versionCode      : 18,
+            versionName      : "1.0.8"
+    ]
+
+}
