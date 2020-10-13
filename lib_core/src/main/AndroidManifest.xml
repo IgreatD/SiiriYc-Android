@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.siiri.lib_core">
+
+    <application>
+
+        <activity
+            android:name="com.siiri.lib_core.ui.activity.CaptureActivity"
+            android:theme="@style/ScreenTheme" />
+
+    </application>
+</manifest>

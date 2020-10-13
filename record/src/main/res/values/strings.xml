@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="_00_00_00">00:00</string>
+    <string name="arr_recording">录制中</string>
+    <string name="aar_playing">播放中</string>
+    <string name="aar_paused">暂停录制</string>
+    <string name="aar_save">保存</string>
+</resources>

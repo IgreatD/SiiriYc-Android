@@ -4,8 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.NetworkUtils
-import com.siiri.yc.extension.asyncAndAwait
-
+import com.siiri.lib_core.extension.asyncAndAwait
 
 /**
  * @author: dinglei
@@ -15,11 +14,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*setContentView(R.layout.activity_splash)
-        SwitchIpUtil.switchIp(this)
-        iv_switch.onClick {
-            SwitchIpUtil.switchIp(this)
-        }*/
         asyncAndAwait({
             NetworkUtils.isAvailableAsync {
                 if (it) {

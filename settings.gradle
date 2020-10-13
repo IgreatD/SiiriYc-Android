@@ -1,3 +1,6 @@
+include ':test'
+include ':record'
+include ':lib_core'
 include ':lib_update'
 include ':push'
 include ':app'

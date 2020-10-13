@@ -2,15 +2,19 @@ package com.siiri.yc.webview
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.webkit.JavascriptInterface
 import com.apm.lib_update.CheckUpdate
 import com.blankj.utilcode.util.GsonUtils
 import com.apm.lib_update.bean.UpdateEntity
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.jess.arms.utils.ArmsUtils
 import com.just.agentweb.AgentWeb
-import com.siiri.yc.config.Api
-import com.siiri.yc.ui.activity.MainActivity
+import com.siiri.record.audio.AndroidAudioRecorder
+import com.siiri.record.video.VideoPlayActivity
+import com.siiri.yc.mvp.contract.WebViewContract
+import com.siiri.yc.utils.SwitchIpUtil
 import com.siiri.yc.utils.UserUtils
 import java.lang.Exception
 
@@ -19,7 +23,7 @@ import java.lang.Exception
  * @date: 2020/9/13 08:55
  */
 class AndroidInterface(
-    private val activity: MainActivity,
+    private val view: WebViewContract.View,
     private val agentWeb: AgentWeb
 ) {
 
@@ -28,7 +32,7 @@ class AndroidInterface(
      */
     @JavascriptInterface
     fun switchIp() {
-        activity.switchIp()
+        SwitchIpUtil.switchIp(view.getActivity())
     }
 
     /**
@@ -36,7 +40,7 @@ class AndroidInterface(
      */
     @JavascriptInterface
     fun scan() {
-        activity.startScan()
+        view.requestCameraPermission()
     }
 
     /**
@@ -75,7 +79,7 @@ class AndroidInterface(
     @JavascriptInterface
     fun saveUserInfo(userInfoStr: String) {
         UserUtils.userInfoStr = userInfoStr
-        activity.setAliasPush(true)
+        view.setAliasPush(true)
     }
 
     /**
@@ -83,8 +87,40 @@ class AndroidInterface(
      */
     @JavascriptInterface
     fun clearUserInfo() {
-        (activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancelAll()
-        activity.setAliasPush(false)
+        (view.getActivity()
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancelAll()
+        view.setAliasPush(false)
+    }
+
+
+    /**
+     * 选择文件
+     */
+    @JavascriptInterface
+    fun chooseFile() {
+        view.showChooseFile()
+    }
+
+    /**
+     * 跳转视频播放页面
+     */
+    @JavascriptInterface
+    fun startVideoPlay(fileName: String) {
+        val intent = Intent(view.getActivity(), VideoPlayActivity::class.java)
+        intent.putExtra("url", "http://${UserUtils.webViewIP}:9001/${fileName}")
+        ArmsUtils.startActivity(intent)
+    }
+
+    /**
+     * 跳转音频播放页面
+     */
+    @JavascriptInterface
+    fun startAudioPlay(fileName: String) {
+        AndroidAudioRecorder.with(view.getActivity())
+            .setFilePath("http://${UserUtils.webViewIP}:9001/${fileName}")
+            .setAutoPlay(true)
+            .setAutoStart(false)
+            .record()
     }
 
 }

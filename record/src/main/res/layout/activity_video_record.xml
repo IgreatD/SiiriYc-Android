@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack">
+
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:keepScreenOn="true"
+        app:cameraAudio="on"
+        app:cameraEngine="camera2"
+        app:cameraExperimental="true"
+        app:cameraFacing="back"
+        app:cameraFlash="auto"
+        app:cameraGestureLongTap="none"
+        app:cameraGesturePinch="zoom"
+        app:cameraGestureScrollHorizontal="filterControl1"
+        app:cameraGestureScrollVertical="exposureCorrection"
+        app:cameraGestureTap="autoFocus"
+        app:cameraGrid="off"
+        app:cameraMode="video"
+        app:cameraPlaySounds="true"
+        app:cameraPreview="glSurface" />
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:alignItems="flex_start"
+        app:flexDirection="column">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:justifyContent="space_between">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/closeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                app:layout_flexShrink="0"
+                app:srcCompat="@drawable/aar_ic_clear" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/checkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:visibility="invisible"
+                app:layout_flexShrink="0"
+                app:srcCompat="@drawable/aar_ic_check" />
+        </com.google.android.flexbox.FlexboxLayout>
+
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/_00_00_00"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            tools:text="00:00:00" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        app:alignItems="flex_end"
+        app:justifyContent="space_around">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/restartButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/aar_ic_restart" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/recordButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/aar_ic_rec" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/successButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/aar_ic_play" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</RelativeLayout>

@@ -1,24 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="App.AppTheme" parent="QMUI.Compat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionMenuTextColor">@color/white</item>
-        <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
-        <item name="qmui_config_color_blue">@color/colorPrimary</item>
-    </style>
-
-    <style name="Animation_Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/translate_right_to_center</item>
-        <item name="android:activityOpenExitAnimation">@anim/translate_center_to_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/translate_left_to_center</item>
-        <item name="android:activityCloseExitAnimation">@anim/translate_center_to_right</item>
-    </style>
-
-    <style name="ScreenTheme" parent="App.AppTheme">
-        <item name="android:windowFullscreen">true</item>
-    </style>
 
     <style name="SplashTheme" parent="App.AppTheme">
         <item name="android:windowBackground">@drawable/splash_layer_list</item>

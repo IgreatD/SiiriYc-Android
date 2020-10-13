@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.item_drop_down.view.*
 object SwitchIpUtil {
 
     fun switchIp(activity: Activity) {
-        val autoUrls = mutableListOf("172.16.40.23", "117.158.214.190")
+        val autoUrls = mutableListOf("172.16.50.19", "172.16.40.23", "117.158.214.190")
         autoUrls.addAll(UserUtils.getInputHistories())
         val dialog = QMUIDialog.CustomDialogBuilder(activity)
             .setLayout(R.layout.layout_switch_url)
