@@ -1,5 +1,7 @@
 package com.siiri.yc.mvp.model.api
 
+import com.siiri.yc.BuildConfig
+
 
 /**
  * @author: dinglei
@@ -7,7 +9,6 @@ package com.siiri.yc.mvp.model.api
  */
 interface Api {
     companion object {
-        const val REQUEST_SUCCESS = 200
-        const val BASE_URL = "http://172.16.40.23:9004/api/"
+        const val BASE_URL = "http://${BuildConfig.WEBVIEW_URL}:8812/api/"
     }
 }

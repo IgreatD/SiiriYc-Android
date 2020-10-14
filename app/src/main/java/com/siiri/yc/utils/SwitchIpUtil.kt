@@ -18,6 +18,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 import com.siiri.yc.R
 import com.siiri.yc.ui.activity.MainActivity
 import kotlinx.android.synthetic.main.item_drop_down.view.*
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 
 /**
  * @author: dinglei
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.item_drop_down.view.*
 object SwitchIpUtil {
 
     fun switchIp(activity: Activity) {
-        val autoUrls = mutableListOf("172.16.50.19", "172.16.40.23", "117.158.214.190")
+        val autoUrls = mutableListOf("172.16.40.23", "117.158.214.190")
         autoUrls.addAll(UserUtils.getInputHistories())
         val dialog = QMUIDialog.CustomDialogBuilder(activity)
             .setLayout(R.layout.layout_switch_url)

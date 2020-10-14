@@ -1,7 +1,7 @@
 ext {
 
     debug = [
-            webViewUrl: "\"172.16.50.19\""
+            webViewUrl: "\"172.16.40.23\""
     ]
 
     release = [
@@ -13,8 +13,8 @@ ext {
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 21,
             targetSdkVersion : 27,
-            versionCode      : 20,
-            versionName      : "2.0.0"
+            versionCode      : 10,
+            versionName      : "2.0.3"
     ]
 
     version = [

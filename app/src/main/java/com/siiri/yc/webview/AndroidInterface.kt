@@ -107,7 +107,7 @@ class AndroidInterface(
     @JavascriptInterface
     fun startVideoPlay(fileName: String) {
         val intent = Intent(view.getActivity(), VideoPlayActivity::class.java)
-        intent.putExtra("url", "http://${UserUtils.webViewIP}:9001/${fileName}")
+        intent.putExtra("url", "http://${UserUtils.webViewIP}:8812/download/${fileName}")
         ArmsUtils.startActivity(intent)
     }
 
@@ -117,7 +117,7 @@ class AndroidInterface(
     @JavascriptInterface
     fun startAudioPlay(fileName: String) {
         AndroidAudioRecorder.with(view.getActivity())
-            .setFilePath("http://${UserUtils.webViewIP}:9001/${fileName}")
+            .setFilePath("http://${UserUtils.webViewIP}:8812/download/${fileName}")
             .setAutoPlay(true)
             .setAutoStart(false)
             .record()

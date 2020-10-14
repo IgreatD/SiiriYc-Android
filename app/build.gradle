@@ -120,4 +120,5 @@ dependencies {
     implementation project(":record")
     kapt rootProject.ext.dependencies["dagger2-compiler"]
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'me.jessyan:retrofit-url-manager:1.4.0'
 }
