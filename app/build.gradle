@@ -69,6 +69,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "WEBVIEW_URL", debugConfig['webViewUrl']
             minifyEnabled false
         }
         release {

@@ -5,6 +5,7 @@ package com.siiri.yc.app
  * @date: 2020/9/23 19:06
  */
 object Const {
+    const val TOKEN_KEY: String = "token_key"
     const val WEBVIEW_URL_KEY = "webview_url_key"
     const val HISTORY_WEBVIEW_URL_KEY = "history_webview_url_key"
 }

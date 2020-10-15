@@ -18,7 +18,6 @@ import com.siiri.push.JPushUtils
 import com.siiri.record.audio.AndroidAudioRecorder
 import com.siiri.record.audio.AudioRecordActivity
 import com.siiri.record.video.VideoRecordActivity
-import com.siiri.yc.BuildConfig
 import com.siiri.yc.R
 import com.siiri.yc.app.PermissionConst
 import com.siiri.yc.app.event.EventBusTags
@@ -73,7 +72,6 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        UserUtils.webViewIP = BuildConfig.WEBVIEW_URL
         validateIP()
         initWebView()
     }
@@ -93,8 +91,6 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
                             NetworkErrorActivity::class.java
                         )
                     )
-                }else{
-
                 }
             }
         }
@@ -174,6 +170,7 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
                     FileType.IMAGE.name -> {
                         mPermissionPresenter.requestPermission(
                             REQUEST_CODE_CHOOSE_IMAGE,
+                            PermissionConst.CAMERA_PERMISSION,
                             PermissionConst.WRITE_EXTERNAL_STORAGE_PERMISSION
                         )
                     }

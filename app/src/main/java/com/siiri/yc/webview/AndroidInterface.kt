@@ -14,6 +14,7 @@ import com.just.agentweb.AgentWeb
 import com.siiri.record.audio.AndroidAudioRecorder
 import com.siiri.record.video.VideoPlayActivity
 import com.siiri.yc.mvp.contract.WebViewContract
+import com.siiri.yc.mvp.model.api.Api
 import com.siiri.yc.utils.SwitchIpUtil
 import com.siiri.yc.utils.UserUtils
 import java.lang.Exception
@@ -107,7 +108,7 @@ class AndroidInterface(
     @JavascriptInterface
     fun startVideoPlay(fileName: String) {
         val intent = Intent(view.getActivity(), VideoPlayActivity::class.java)
-        intent.putExtra("url", "http://${UserUtils.webViewIP}:8812/download/${fileName}")
+        intent.putExtra("url", Api.getDownloadApi(fileName))
         ArmsUtils.startActivity(intent)
     }
 
@@ -117,7 +118,7 @@ class AndroidInterface(
     @JavascriptInterface
     fun startAudioPlay(fileName: String) {
         AndroidAudioRecorder.with(view.getActivity())
-            .setFilePath("http://${UserUtils.webViewIP}:8812/download/${fileName}")
+            .setFilePath(Api.getDownloadApi(fileName))
             .setAutoPlay(true)
             .setAutoStart(false)
             .record()

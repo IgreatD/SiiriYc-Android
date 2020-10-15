@@ -13,11 +13,11 @@ import com.blankj.utilcode.util.ToastUtils
  */
 object CheckUpdate {
 
-    fun check(entity: UpdateEntity, appDomain: String) {
+    fun check(entity: UpdateEntity, apkUrl: String) {
         val serverVersion = entity.version
         val currentVersion = AppUtils.getAppVersionCode()
         if (currentVersion < serverVersion)
-            updateApk(entity, appDomain)
+            updateApk(entity, apkUrl)
         else {
             if (entity.showToast) {
                 ToastUtils.showShort("你已经是最新版本了")
@@ -26,7 +26,7 @@ object CheckUpdate {
     }
 
     private fun updateApk(entity: UpdateEntity, appDomain: String) {
-        val apkUrl = "http://${appDomain}:8805/${entity.url}"
+        val apkUrl = "http://${appDomain}/update-apk-service/${entity.url}"
         UpdateAppUtils.getInstance()
             .apkUrl(apkUrl)
             .updateTitle("${entity.title}  V${entity.versionName}")

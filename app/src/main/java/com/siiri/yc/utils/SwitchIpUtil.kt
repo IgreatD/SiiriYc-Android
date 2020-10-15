@@ -18,7 +18,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 import com.siiri.yc.R
 import com.siiri.yc.ui.activity.MainActivity
 import kotlinx.android.synthetic.main.item_drop_down.view.*
-import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 
 /**
  * @author: dinglei
@@ -27,7 +26,7 @@ import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 object SwitchIpUtil {
 
     fun switchIp(activity: Activity) {
-        val autoUrls = mutableListOf("172.16.40.23", "117.158.214.190")
+        val autoUrls = mutableListOf("172.16.40.23:8804", "117.158.214.190:8804")
         autoUrls.addAll(UserUtils.getInputHistories())
         val dialog = QMUIDialog.CustomDialogBuilder(activity)
             .setLayout(R.layout.layout_switch_url)
@@ -38,11 +37,6 @@ object SwitchIpUtil {
             .addAction("确定") { dialog, _ ->
                 val inputUrl =
                     dialog.findViewById<AppCompatEditText>(R.id.etUrl)?.text.toString()
-                val ip = RegexUtils.isIP(inputUrl)
-                if (!ip) {
-                    ToastUtils.showShort("请输入或者选择正确的IP地址")
-                    return@addAction
-                }
                 UserUtils.webViewIP = inputUrl
                 if (!autoUrls.contains(inputUrl)) {
                     UserUtils.addInputHistory(inputUrl)
@@ -52,6 +46,7 @@ object SwitchIpUtil {
                 ActivityUtils.startActivity(Intent(activity, MainActivity::class.java))
             }.create()
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerview)
+        dialog.findViewById<AppCompatEditText>(R.id.etUrl)?.setText(UserUtils.webViewIP)
         if (recyclerView != null)
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(activity)

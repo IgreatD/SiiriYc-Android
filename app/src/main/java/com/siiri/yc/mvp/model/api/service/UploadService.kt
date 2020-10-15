@@ -13,15 +13,15 @@ import retrofit2.http.*
  */
 interface UploadService {
 
-    @POST("/api/file/check")
+    @POST("/upload-service/api/file/check")
     fun check(@Query("md5File") md5File: String, @Body body: RequestBody)
             : Observable<BaseResponse<String>>
 
-    @POST("/api/file/chunk")
+    @POST("/upload-service/api/file/chunk")
     fun chunk(@Query("md5File") md5File: String, @Query("chunk") chunk: Int)
             : Observable<BaseResponse<Boolean>>
 
-    @POST("/api/file/upload")
+    @POST("/upload-service/api/file/upload")
     @Multipart
     fun upload(
         @Query("md5File") md5File: String,
@@ -30,7 +30,7 @@ interface UploadService {
     )
             : Observable<BaseResponse<String>>
 
-    @POST("/api/file/merge")
+    @POST("/upload-service/api/file/merge")
     fun merge(
         @Query("md5File") md5File: String,
         @Query("chunks") chunks: Int,

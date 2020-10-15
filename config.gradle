@@ -1,11 +1,11 @@
 ext {
 
     debug = [
-            webViewUrl: "\"172.16.40.23\""
+            webViewUrl: "\"172.16.40.23:8804\""
     ]
 
     release = [
-            webViewUrl: "\"117.158.214.190\""
+            webViewUrl: "\"117.158.214.190:8804\""
     ]
 
     android = [
@@ -13,7 +13,7 @@ ext {
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 21,
             targetSdkVersion : 27,
-            versionCode      : 10,
+            versionCode      : 23,
             versionName      : "2.0.3"
     ]
 
