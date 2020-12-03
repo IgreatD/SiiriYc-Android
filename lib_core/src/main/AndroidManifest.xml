@@ -7,5 +7,9 @@
             android:name="com.siiri.lib_core.ui.activity.CaptureActivity"
             android:theme="@style/ScreenTheme" />
 
+        <activity
+            android:name=".ui.activity.ImagePreviewActivity"
+            android:theme="@style/ScreenTheme" />
+
     </application>
 </manifest>

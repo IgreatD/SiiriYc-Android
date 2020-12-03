@@ -11,10 +11,12 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jess.arms.utils.ArmsUtils
 import com.just.agentweb.AgentWeb
+import com.siiri.lib_core.ui.activity.ImagePreviewActivity
 import com.siiri.record.audio.AndroidAudioRecorder
 import com.siiri.record.video.VideoPlayActivity
 import com.siiri.yc.mvp.contract.WebViewContract
 import com.siiri.yc.mvp.model.api.Api
+import com.siiri.yc.mvp.model.entity.FileType
 import com.siiri.yc.utils.SwitchIpUtil
 import com.siiri.yc.utils.UserUtils
 import java.lang.Exception
@@ -51,7 +53,7 @@ class AndroidInterface(
     fun setUpdateInfo(updateInfoStr: String) {
         try {
             val entity = GsonUtils.fromJson(updateInfoStr, UpdateEntity::class.java)
-            CheckUpdate.check(entity, UserUtils.webViewIP)
+            CheckUpdate.check(entity, Api.UPDATE_URL)
         } catch (e: Exception) {
 
         }
@@ -106,22 +108,28 @@ class AndroidInterface(
      * 跳转视频播放页面
      */
     @JavascriptInterface
-    fun startVideoPlay(fileName: String) {
-        val intent = Intent(view.getActivity(), VideoPlayActivity::class.java)
-        intent.putExtra("url", Api.getDownloadApi(fileName))
-        ArmsUtils.startActivity(intent)
+    fun startFilePreview(fileName: String, type: Int) {
+        when (type) {
+            FileType.IMAGE.ordinal -> {
+                val intent = Intent(view.getActivity(), ImagePreviewActivity::class.java)
+                intent.putExtra("url", Api.getDownloadApi(fileName))
+                ArmsUtils.startActivity(intent)
+            }
+            FileType.AUDIO.ordinal -> {
+                AndroidAudioRecorder.with(view.getActivity())
+                    .setFilePath(Api.getDownloadApi(fileName))
+                    .setAutoPlay(true)
+                    .setAutoStart(false)
+                    .record()
+            }
+            FileType.VIDEO.ordinal -> {
+                val intent = Intent(view.getActivity(), VideoPlayActivity::class.java)
+                intent.putExtra("url", Api.getDownloadApi(fileName))
+                ArmsUtils.startActivity(intent)
+            }
+        }
+
     }
 
-    /**
-     * 跳转音频播放页面
-     */
-    @JavascriptInterface
-    fun startAudioPlay(fileName: String) {
-        AndroidAudioRecorder.with(view.getActivity())
-            .setFilePath(Api.getDownloadApi(fileName))
-            .setAutoPlay(true)
-            .setAutoStart(false)
-            .record()
-    }
 
 }

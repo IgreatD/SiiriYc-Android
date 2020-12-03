@@ -54,7 +54,7 @@ class VideoRecordActivity : AppCompatActivity() {
 
     private var mRecordDuration = 0L
 
-    private val maxDuration = 1000 * 60 * 10
+    private val maxDuration = 1000 * 30
 
     private var mTimer: Timer? = null
 
@@ -76,14 +76,15 @@ class VideoRecordActivity : AppCompatActivity() {
             toggleRecording()
         }
         successButton.setOnClickListener {
-            mVideoResult ?: run {
+            if (mVideoResult != null) {
+                val intent = Intent(this, VideoPlayActivity::class.java)
+                intent.putExtra("url", mVideoResult?.file?.path)
+                startActivity(intent)
+            } else {
                 Toast.makeText(this, "视频录制出错，重新录制", Toast.LENGTH_SHORT).show()
                 toggleRecording()
-                return@run
             }
-            val intent = Intent(this, VideoPlayActivity::class.java)
-            intent.putExtra("url", mVideoResult?.file?.path)
-            startActivity(intent)
+
         }
         closeButton.setOnClickListener {
             try {
@@ -118,6 +119,7 @@ class VideoRecordActivity : AppCompatActivity() {
             override fun onVideoRecordingEnd() {
                 isRecording = false
                 destroyTimer()
+                stopRecording()
             }
 
             override fun onVideoRecordingStart() {
@@ -144,7 +146,7 @@ class VideoRecordActivity : AppCompatActivity() {
                         mRecordDuration
                     )
             }
-        }, 0, 1000L)
+        }, 1000, 1000L)
     }
 
     @SuppressLint("SetTextI18n")
@@ -152,13 +154,14 @@ class VideoRecordActivity : AppCompatActivity() {
         if (isRecording) {
             stopRecording()
         }
-        cameraView.takeVideo(
+        cameraView.takeVideoSnapshot(
             File(filesDir, System.currentTimeMillis().toString() + ".mp4"),
             maxDuration
         )
         restartButton.visibility = View.INVISIBLE
         successButton.visibility = View.INVISIBLE
         checkButton.visibility = View.INVISIBLE
+        mRecordButton.visibility = View.VISIBLE
         mRecordButton.setImageResource(R.drawable.aar_ic_stop)
         mTvDuration.text = "00:00"
         mRecordDuration = 0

@@ -24,4 +24,4 @@ fun Context.inflateLayout(
     @LayoutRes layoutId: Int,
     parent: ViewGroup? = null,
     attachToRoot: Boolean = false
-) = inflater.inflate(layoutId, parent, attachToRoot)
+): View = inflater.inflate(layoutId, parent, attachToRoot)

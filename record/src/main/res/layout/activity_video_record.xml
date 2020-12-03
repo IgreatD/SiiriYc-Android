@@ -8,8 +8,9 @@
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/camera"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:keepScreenOn="true"
         app:cameraAudio="on"
@@ -25,7 +26,11 @@
         app:cameraGrid="off"
         app:cameraMode="video"
         app:cameraPlaySounds="true"
-        app:cameraPreview="glSurface" />
+        app:cameraPreview="glSurface"
+        app:cameraVideoSizeMaxHeight="400"
+        app:cameraVideoSizeMaxWidth="400"
+        app:cameraVideoSizeMinHeight="400"
+        app:cameraVideoSizeMinWidth="400" />
 
 
     <com.google.android.flexbox.FlexboxLayout
@@ -77,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="60dp"
         app:alignItems="flex_end"
         app:justifyContent="space_around">
 

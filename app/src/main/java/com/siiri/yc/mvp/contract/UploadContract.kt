@@ -16,7 +16,7 @@ import java.io.File
 interface UploadContract {
     interface View : IView {
         fun uploadSuccess(fileName: String)
-        fun showUploadDialog()
+        fun showUploadDialog(message: String?)
         fun hideUploadDialog()
         fun getActivity(): Activity
     }

@@ -18,10 +18,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -260,7 +257,6 @@ class AudioRecordActivity : AppCompatActivity(), PullTransport.OnAudioChunkPulle
         }, 100)
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun restartRecording() {
         when {
@@ -350,11 +346,11 @@ class AudioRecordActivity : AppCompatActivity(), PullTransport.OnAudioChunkPulle
                 )
                 val factory = ProgressiveMediaSource.Factory(
                     defaultDataSourceFactory
-                ).createMediaSource(Uri.parse(filePath))
-                player?.prepare(factory)
+                ).createMediaSource(MediaItem.fromUri(Uri.parse(filePath)))
+                player?.setMediaSource(factory)
+                player?.prepare()
                 player?.playWhenReady = true
                 timerView.text = "00:00"
-                statusView.text = getString(R.string.aar_playing)
                 statusView.visibility = View.VISIBLE
                 playView.setImageResource(R.drawable.aar_ic_stop)
                 playerSecondsElapsed = 0
@@ -369,7 +365,7 @@ class AudioRecordActivity : AppCompatActivity(), PullTransport.OnAudioChunkPulle
                             Player.STATE_READY -> statusView.text = getString(R.string.aar_playing)
                             Player.STATE_IDLE -> statusView.text = "音频文件错误"
                             else -> {
-
+                                statusView.text = "准备播放"
                             }
                         }
                     }

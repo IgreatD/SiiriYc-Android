@@ -36,6 +36,8 @@ class WebViewPresenter @Inject constructor(
 
     private var mAgentWeb: AgentWeb? = null
 
+    private var mPageLoadFinished = false
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         mAgentWeb = AgentWeb.with(mRootView.getActivity())
@@ -51,13 +53,16 @@ class WebViewPresenter @Inject constructor(
 
                 override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
                     LogUtils.dTag("MainActivity-WebView", "onPageStarted")
+                    mPageLoadFinished = false
                     super.onPageStarted(view, url, favicon)
 
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     LogUtils.dTag("MainActivity-WebView", "onPageFinished")
-                    mRootView.loadFinished(true)
+                    if (!mPageLoadFinished)
+                        mRootView.loadFinished(true)
+                    mPageLoadFinished = true
                     super.onPageFinished(view, url)
                 }
 

@@ -26,7 +26,7 @@ object CheckUpdate {
     }
 
     private fun updateApk(entity: UpdateEntity, appDomain: String) {
-        val apkUrl = "http://${appDomain}/update-apk-service/${entity.url}"
+        val apkUrl = "${appDomain}/${entity.url}"
         UpdateAppUtils.getInstance()
             .apkUrl(apkUrl)
             .updateTitle("${entity.title}  V${entity.versionName}")

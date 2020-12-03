@@ -9,12 +9,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.qmuiteam.qmui.kotlin.onClick
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
+import com.siiri.yc.BuildConfig
 import com.siiri.yc.R
 import com.siiri.yc.ui.activity.MainActivity
 import kotlinx.android.synthetic.main.item_drop_down.view.*
@@ -26,7 +25,9 @@ import kotlinx.android.synthetic.main.item_drop_down.view.*
 object SwitchIpUtil {
 
     fun switchIp(activity: Activity) {
-        val autoUrls = mutableListOf("172.16.40.23:8804", "117.158.214.190:8804")
+        val autoUrls = mutableListOf(BuildConfig.WEBVIEW_URL)
+        if (BuildConfig.DEBUG)
+            autoUrls.add(0, "172.16.50.192:8804")
         autoUrls.addAll(UserUtils.getInputHistories())
         val dialog = QMUIDialog.CustomDialogBuilder(activity)
             .setLayout(R.layout.layout_switch_url)

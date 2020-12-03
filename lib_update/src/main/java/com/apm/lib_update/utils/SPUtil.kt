@@ -35,6 +35,6 @@ internal object SPUtil {
 
     private fun getSp(): SharedPreferences? {
         if (globalContext() == null) return null
-        return globalContext()!!.getSharedPreferences(globalContext()!!.packageName, Activity.MODE_PRIVATE)
+        return globalContext()!!.getSharedPreferences("update_sp", Activity.MODE_PRIVATE)
     }
 }

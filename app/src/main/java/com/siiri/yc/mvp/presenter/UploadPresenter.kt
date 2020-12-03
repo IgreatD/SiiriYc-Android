@@ -31,10 +31,10 @@ class UploadPresenter @Inject constructor(
     fun uploadFiles(path: String, isDelete: Boolean = true) {
         val file = File(path)
         if (!FileUtils.isFileExists(file)) {
-            mRootView.showMessage("文件不存在")
+            mRootView.showMessage("文件不存在，请重新选择")
             return
         }
-        mRootView.showUploadDialog()
+        mRootView.showUploadDialog(null)
         val md5File = MD5Util.fileToMD5(file)
         val fileName = file.name
         val type =
@@ -134,8 +134,10 @@ class UploadPresenter @Inject constructor(
 
     fun uploadComplete(file: File, delete: Boolean) {
         mRootView.hideUploadDialog()
-        if (delete) FileUtils.delete(file)
-        CommonUtils.updateFileLibrary(mRootView.getActivity(), file)
+        if (delete) {
+            FileUtils.delete(file)
+            CommonUtils.updateFileLibrary(mRootView.getActivity(), file)
+        }
     }
 
 }

@@ -3,7 +3,9 @@ package com.siiri.yc.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.os.Environment
+import android.text.TextUtils
+import android.view.KeyEvent
 import android.widget.Toast
 import com.blankj.utilcode.util.*
 import com.jess.arms.base.BaseActivity
@@ -44,6 +46,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
+import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
@@ -177,13 +183,15 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
                     FileType.AUDIO.name -> {
                         mPermissionPresenter.requestPermission(
                             REQUEST_CODE_CHOOSE_AUDIO,
-                            PermissionConst.AUDIO_PERMISSION
+                            PermissionConst.AUDIO_PERMISSION,
+                            PermissionConst.WRITE_EXTERNAL_STORAGE_PERMISSION
                         )
                     }
                     FileType.VIDEO.name -> {
                         mPermissionPresenter.requestPermission(
                             REQUEST_CODE_CHOOSE_VIDEO,
                             PermissionConst.CAMERA_PERMISSION,
+                            PermissionConst.AUDIO_PERMISSION,
                             PermissionConst.WRITE_EXTERNAL_STORAGE_PERMISSION
                         )
                     }
@@ -230,11 +238,11 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
 
     private var dialogVisible = false
 
-    override fun showUploadDialog() {
+    override fun showUploadDialog(message: String?) {
         if (dialogVisible) return
         loading = QMUITipDialog.Builder(this)
             .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-            .setTipWord(getString(R.string.uploading))
+            .setTipWord(message ?: getString(R.string.uploading))
             .create(false)
         dialogVisible = true
         loading?.show()
@@ -302,7 +310,12 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
                 REQUEST_CODE_CHOOSE_IMAGE -> {
                     val paths = Matisse.obtainPathResult(data) ?: mutableListOf()
                     if (paths.isNotEmpty()) {
-                        mUploadPresenter.uploadFiles(paths[0], false)
+                        val path = paths[0]
+                        if (MatisseUtils.isImage(path))
+                            compressImage(path)
+                        else {
+                            mUploadPresenter.uploadFiles(path)
+                        }
                     }
                 }
                 REQUEST_CODE_CHOOSE_AUDIO -> {
@@ -321,6 +334,44 @@ class MainActivity : BaseActivity<WebViewPresenter>(), WebViewContract.View,
                 }
             }
         }
+    }
+
+    private fun compressImage(path: String) {
+        Luban.with(this)
+            .load(path)
+            .ignoreBy(102400)
+            .setTargetDir(getPath())
+            .filter {
+                !(TextUtils.isEmpty(it) || it.toLowerCase(Locale.getDefault()).endsWith(".gif"))
+            }
+            .setCompressListener(object : OnCompressListener {
+                override fun onSuccess(file: File?) {
+                    hideUploadDialog()
+                    if (file != null) {
+                        mUploadPresenter.uploadFiles(file.path, file.path != path)
+                    }
+                }
+
+                override fun onError(e: Throwable?) {
+                    hideUploadDialog()
+                }
+
+                override fun onStart() {
+                    showUploadDialog("文件压缩中...")
+                }
+            })
+            .launch()
+
+
+    }
+
+    private fun getPath(): String? {
+        val path: String =
+            Environment.getExternalStorageDirectory().toString() + "/file/"
+        val file = File(path)
+        return if (file.mkdirs()) {
+            path
+        } else path
     }
 
     companion object {

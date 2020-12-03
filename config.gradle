@@ -8,13 +8,17 @@ ext {
             webViewUrl: "\"117.158.214.190:8804\""
     ]
 
+    stage = [
+            webViewUrl: "\"10.157.3.3:8804\""
+    ]
+
     android = [
             compileSdkVersion: 28,
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 21,
             targetSdkVersion : 27,
-            versionCode      : 23,
-            versionName      : "2.0.3"
+            versionCode      : 25,
+            versionName      : "2.0.5"
     ]
 
     version = [

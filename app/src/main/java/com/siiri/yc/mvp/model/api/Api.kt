@@ -15,6 +15,9 @@ interface Api {
         val BASE_URL =
             if (BuildConfig.DEBUG) "http://172.16.40.23:8804/" else "http://${BuildConfig.WEBVIEW_URL}/"
 
+        val UPDATE_URL =
+            if (BuildConfig.DEBUG) "http://172.16.40.23:8804/update-apk-service" else "http://${BuildConfig.WEBVIEW_URL}/update-apk-service"
+
         fun getDownloadApi(fileName: String): String {
             return "http://${UserUtils.webViewIP}/download-service/${fileName}"
         }

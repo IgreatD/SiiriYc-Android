@@ -6,6 +6,7 @@ import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.siiri.record.R
+import kotlinx.android.synthetic.main.activity_detail_player.*
 
 
 /**
@@ -14,18 +15,18 @@ import com.siiri.record.R
  */
 class VideoPlayActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
 
-    private val mPlayerView by lazy { findViewById<StandardGSYVideoPlayer>(R.id.detail_player) }
+    private val mPlayerView by lazy { findViewById<StandardGSYVideoPlayer>(R.id.videoView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_player)
-
+        closeButton.setOnClickListener {
+            onBackPressed()
+        }
         mPlayerView.titleTextView.visibility = View.GONE
         mPlayerView.backButton.visibility = View.GONE
 
         initVideoBuilderMode()
-
-        showFull()
 
         mPlayerView.startButton.performClick()
     }
@@ -40,10 +41,6 @@ class VideoPlayActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
 
     override fun getGSYVideoPlayer(): StandardGSYVideoPlayer {
         return mPlayerView
-    }
-
-    override fun onQuitFullscreen(url: String?, vararg objects: Any?) {
-        onBackPressed()
     }
 
     override fun onBackPressed() {
@@ -62,10 +59,11 @@ class VideoPlayActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
             .setVideoTitle(" ")
             .setFullHideStatusBar(true)
             .setIsTouchWiget(true)
-            .setRotateViewAuto(false)
+            .setRotateViewAuto(true)
             .setLockLand(false)
             .setShowFullAnimation(false)
-            .setNeedLockFull(true)
+            .setNeedLockFull(false)
+            .setStartAfterPrepared(true)
             .setSeekRatio(1f)
     }
 

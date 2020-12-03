@@ -1,8 +1,6 @@
 package com.siiri.yc.mvp.contract
 
 import android.app.Activity
-import android.content.Context
-import com.jess.arms.mvp.IModel
 import com.jess.arms.mvp.IView
 
 /**

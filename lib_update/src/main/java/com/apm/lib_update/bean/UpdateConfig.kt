@@ -18,7 +18,7 @@ data class UpdateConfig(
     var checkWifi: Boolean = false, // 是否检查是否wifi
     var isShowNotification: Boolean = true, // 是否在通知栏显示
     var notifyImgRes: Int = 0, // 通知栏图标
-    var needCheckMd5: Boolean = false, // 是否需要进行md5校验，仅app下载方式有效
+    var needCheckMd5: Boolean = true, // 是否需要进行md5校验，仅app下载方式有效
     var showDownloadingToast: Boolean = true, // 是否需要显示 【更新下载中】文案
     var serverVersionName: String = "", // 服务器上版本名
     var serverVersionCode: Int = 0 // 服务器上版本号

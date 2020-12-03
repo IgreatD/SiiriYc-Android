@@ -1,7 +1,6 @@
 package com.siiri.yc.utils
 
 import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.LogUtils
 import com.siiri.lib_core.utils.SharePreferenceDelegate
 import com.siiri.yc.BuildConfig
 import com.siiri.yc.app.Const
@@ -21,15 +20,20 @@ object UserUtils {
     private var historyUrls by SharePreferenceDelegate(Const.HISTORY_WEBVIEW_URL_KEY, "")
 
     fun getWebViewUrl(): String {
-        RetrofitUrlManager.getInstance().setGlobalDomain(
-            "http://${
-            if (webViewIP.isEmpty()) {
+        val domain = "http://${
+        when {
+            BuildConfig.DEBUG -> {
+                "172.16.40.23:8804"
+            }
+            webViewIP.isEmpty() -> {
                 BuildConfig.WEBVIEW_URL
-            } else {
+            }
+            else -> {
                 webViewIP
             }
-            }"
-        )
+        }
+        }"
+        RetrofitUrlManager.getInstance().setGlobalDomain(domain)
         return "http://${webViewIP}"
     }
 
